@@ -1,16 +1,22 @@
-# React + Vite
+# Product Catalog Technical Assessment
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A responsive, single-page React application that fetches and displays products from the Fake Store API. 
 
-Currently, two official plugins are available:
+## Features
+* **Data Fetching:** Asynchronous API consumption with loading and error states.
+* **Smart Search:** Real-time filtering by both product title and category.
+* **Input Validation:** Prevents numeric and special character searches to handle edge cases.
+* **Sorting:** Client-side sorting by price (Low to High, High to Low).
+* **Responsive UI:** Built with Tailwind CSS, featuring a responsive grid that adapts from mobile to desktop screens.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Tech Stack
+* React (via Vite)
+* Tailwind CSS
+* JavaScript (ES6+)
 
-## React Compiler
+## How to Run Locally
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. Clone the repository and navigate into the project folder.
+2. Install the dependencies:
+   ```bash
+   npm install
