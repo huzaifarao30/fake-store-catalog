@@ -4,9 +4,10 @@ function App() {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-  
+
   const [categoryFilter, setCategoryFilter] = useState('')
   const [inputError, setInputError] = useState('')
+  const [sortOrder, setSortOrder] = useState('default')
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -28,7 +29,7 @@ function App() {
 
   const handleSearch = (e) => {
     const value = e.target.value;
-    
+
     if (value && !/^[a-zA-Z\s\-]+$/.test(value)) {
       setInputError("Please use only letters for category search.")
     } else {
@@ -37,17 +38,23 @@ function App() {
     setCategoryFilter(value)
   }
 
-  let displayProducts = products.filter(product => 
-product.category.toLowerCase().includes(categoryFilter.toLowerCase()) ||
-    product.title.toLowerCase().includes(categoryFilter.toLowerCase())  )
+  let displayProducts = products.filter(product =>
+    product.category.toLowerCase().includes(categoryFilter.toLowerCase()) ||
+    product.title.toLowerCase().includes(categoryFilter.toLowerCase()))
+
+  if (sortOrder === 'lowToHigh') {
+    displayProducts.sort((a, b) => a.price - b.price)
+  } else if (sortOrder === 'highToLow') {
+    displayProducts.sort((a, b) => b.price - a.price)
+  }
 
   return (
     <div className="min-h-screen bg-gray-100 p-8">
       <h1 className="text-4xl font-bold text-gray-800 mb-6">Product Catalog</h1>
-      
+
       <div className="mb-8">
-        <input 
-          type="text" 
+        <input
+          type="text"
           placeholder="Search by category (e.g. electronics)..."
           className={`w-full max-w-md p-3 border rounded-lg shadow-sm focus:outline-none ${inputError ? 'border-red-500' : 'border-gray-300'}`}
           value={categoryFilter}
@@ -56,12 +63,22 @@ product.category.toLowerCase().includes(categoryFilter.toLowerCase()) ||
         {inputError && <p className="text-red-500 mt-2 text-sm">{inputError}</p>}
       </div>
 
+      <select
+        className="p-3 border border-gray-300 rounded-lg shadow-sm bg-white focus:outline-none"
+        value={sortOrder}
+        onChange={(e) => setSortOrder(e.target.value)}
+      >
+        <option value="default">Sort by Price</option>
+        <option value="lowToHigh">Price: Low to High</option>
+        <option value="highToLow">Price: High to Low</option>
+      </select>
+
       {loading && <p className="text-xl text-blue-600 font-semibold animate-pulse">Loading from API...</p>}
       {error && <p className="text-red-600">Error: {error}</p>}
-      
+
       {!loading && !error && (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          
+
           {displayProducts.length === 0 ? (
             <p className="text-gray-500">No products found for this category.</p>
           ) : (
